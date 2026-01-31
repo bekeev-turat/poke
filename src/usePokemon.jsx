@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { fetchData } from './fetchData'
-import { mapPokemonData } from './pokeApi.mapper'
+import { mapPokemonData } from './poke.mapper'
 
 const BASE_URL = 'https://pokeapi.co/api/v2/pokemon/'
 

@@ -12,17 +12,11 @@ function App() {
 			)}
 			<ul>
 				{status === 'loading'
-					? [
-							...Array(6).map((_, i) => (
-								<li className='skeleton' key={i}>
-									----------
-								</li>
-							)),
-						]
+					? [...Array(6)].map((_, i) => <li className='skeleton' key={i}></li>)
 					: status === 'success' &&
-						data.map((poke, i) => {
+						data.map((poke) => {
 							return (
-								<li key={i}>
+								<li key={poke.id}>
 									<img src={poke.image} alt={poke.name} />
 									<p>{poke.name}</p>
 								</li>
