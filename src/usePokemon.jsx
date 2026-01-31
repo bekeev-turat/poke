@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { fetchData } from './fetchData'
+import { mapPokemonData } from './pokeApi.mapper'
+
 const BASE_URL = 'https://pokeapi.co/api/v2/pokemon/'
 
 export function usePokemon() {
@@ -9,17 +11,24 @@ export function usePokemon() {
 	const [error, setError] = useState('')
 
 	useEffect(() => {
-		async function getPokemons() {
+		const getPokemons = async () => {
 			setStatus('loading')
-			try {
-				const data = await fetchData(BASE_URL)
 
-				setData(data)
+			try {
+				const list = await fetchData(BASE_URL)
+
+				const detailedPokemons = await Promise.all(
+					list.results.map(async (pokemon) => {
+						const data = await fetchData(pokemon.url)
+						return mapPokemonData(data)
+					}),
+				)
+
+				setData(detailedPokemons)
 				setStatus('success')
-			} catch (error) {
-				setError(error.message || 'Ошибка загрузки')
+			} catch (err) {
+				setError(err.message || 'Ошибка загрузки')
 				setStatus('error')
-				console.error('Fetch error:', error)
 			}
 		}
 

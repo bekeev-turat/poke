@@ -1,12 +1,8 @@
 import './App.css'
 import { usePokemon } from './usePokemon'
 
-const BASE_URL = 'https://pokeapi.co/api/v2/pokemon/'
-
 function App() {
 	const { data, status } = usePokemon()
-
-	console.log(data)
 
 	return (
 		<>
@@ -24,10 +20,10 @@ function App() {
 							)),
 						]
 					: status === 'success' &&
-						data.results.map((poke, i) => {
+						data.map((poke, i) => {
 							return (
 								<li key={i}>
-									<img src={poke.url} alt={poke.name} />
+									<img src={poke.image} alt={poke.name} />
 									<p>{poke.name}</p>
 								</li>
 							)
